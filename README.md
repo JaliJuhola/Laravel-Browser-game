@@ -1,2 +1,2 @@
 # Laravel-Browser-game
-Laravel based browser strategic game (PHP, Laravel,)
+Laravel based browser game.
