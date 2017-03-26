@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Army;
 use App\City;
+use App\Gameworld;
 use App\Player;
 use App\TroopUnit;
 use App\User;
@@ -22,18 +23,16 @@ class PlayerController extends Controller
     }
     public function save(Request $request)
     {
-        $player = new Player;
-        $player->tribe = $request->tribe;
-        $player->user_id = Auth::user()->id;
-        $player->save();
-        $city = City::create((['capital' => 1, 'player_id' => Auth::user()->id]));
-        $army = Army::create(['city_id' => $city->id]);
-        TroopUnit::create(['army_id' => $army->id, 'troopname' => 'BasicTroop', 'amount' => '419' /* Reference xD*/]);   // Hardcoded change bls
+        Player::saveToGameWorld(Auth::user()->id, $request->tribe);
         return view('home', ['status' => 'You have verified you account!']);
     }
     public function playersIndex()
     {
         $users = User::all();
         return view('players', ['users' => $users]);
+    }
+    public static function deleteSafely($id)
+    {
+        self::delete($id);
     }
 }

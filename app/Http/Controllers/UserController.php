@@ -12,10 +12,12 @@ class UserController extends Controller
     {
         $this->middleware('auth');
     }
+
     public function index()
     {
         return view('profile', ['user' => Auth::user()]);
     }
+
     public function update(Request $request)
     {
         $this->validate($request, [
@@ -25,6 +27,7 @@ class UserController extends Controller
             ->update(['description' => $request->user_description]);
         return back()->with('status', 'description has been updated');
     }
+
     public function delete(Request $request)
     {
         User::where('id', User::safelyDelete(Auth::user()->id));

@@ -10,14 +10,14 @@ namespace App\Tribe;
 
 
 use App\Troops\BasicTroop;
+use App\Troops\SecondTroop;
 use Illuminate\Support\Facades\DB;
 
 class BasicTribe extends Tribe
 {
-    public static $infantry = [];
+    public static $infantry = [BasicTroop::class, SecondTroop::class];
     public static $cavalry = [];
-    public static function init()
-    {
-          self::$infantry = [BasicTroop::class]; // maybe retrieved from database?
-    }
+    public static $tribeName = "BasicTribe";
+
+
 }

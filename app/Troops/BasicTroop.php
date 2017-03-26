@@ -13,6 +13,20 @@ class BasicTroop
 {
     public static $attackPower = 20;
     public static $speed = 10;
-    public static $defensePower = 5;
+    public static $defencePower = 5;
+    public static $troopName = "BasicTroop";
+    public static $trainingSpeed = 5;
+    public static function attackpower()
+    {
+        return self::$attackPower;
+    }
+    public static function defencePower()
+    {
+        return self::$defencePower;
+    }
+    public static function troopname()
+    {
+        return self::$troopName;
+    }
 
 }

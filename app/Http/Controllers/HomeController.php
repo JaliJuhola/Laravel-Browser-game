@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Middleware\AccountVerified;
+use App\City;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -15,7 +16,6 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(AccountVerified::class);
     }
 
     /**
@@ -23,8 +23,10 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('home');
+        $city = City::all()->where('player_id', '=', Auth::user()->id)->first();
+        $request->session()->put('activeCity', $city->id);
+        return view('home', ['city' => $city]);
     }
 }

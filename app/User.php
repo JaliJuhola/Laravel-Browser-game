@@ -29,7 +29,7 @@ class User extends Authenticatable
     public static function safelyDelete($id)
     {
         User::where('id', $id)->delete();
-        Player::where('user_id', $id)->delete();
+        Player::deleteSafely($id);
     }
     public function player()
     {

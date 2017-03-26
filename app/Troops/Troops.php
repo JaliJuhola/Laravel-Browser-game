@@ -15,5 +15,6 @@ abstract class Troops
     public static $speed;
     public static $defensePower;
     public static abstract function type();
+    public static $trainingSpeed;
 
 }

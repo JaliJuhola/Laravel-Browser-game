@@ -1,10 +1,10 @@
 @extends('layouts.game')
-@section("site_head")
-    Overall view
+@section('site_head')
+    Home page
 @endsection
-@section('content')
-    <div class="label label-primary">
-                 {{csrf_field()}}
-                    Vue.component('example', require('./components/Example.vue'));!
+@section('mainarea')
+    <div id="app">
+        <example></example>
+        <trooplist></trooplist>
     </div>
 @endsection

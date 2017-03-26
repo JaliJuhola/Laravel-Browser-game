@@ -4,13 +4,18 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        $gameWorldConfig = require "config/gameworldConfig.php";
+        \App\Gameworld::start($gameWorldConfig);
+
+        $users = $gameWorldConfig['initusers'];
+        foreach ($users as $user) {
+            $user['password'] = bcrypt($user['password']);
+            $id = \Illuminate\Support\Facades\DB::table('users')->insertGetId(
+                $user
+            );
+            \App\Player::saveToGameWorld($id, "BasicTribe");
+        }
     }
 }

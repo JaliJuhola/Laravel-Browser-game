@@ -19,6 +19,7 @@ class CreatePlayersTable extends Migration
                 ->references('id')->on('users');
             $table->string('Tribe', 100);
             $table->string('alliance', 100)->nullable(true);
+            $table->integer('activeCity')->nullable(true);
             $table->timestamps();
         });
     }

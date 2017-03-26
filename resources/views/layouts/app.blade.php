@@ -1,10 +1,31 @@
 <!DOCTYPE html>
 <html lang="{{ config('app.locale') }}">
 <head>
+    <script>
+        function startTime() {
+            var today = new Date();
+            var h = today.getHours() - 2;
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            var d = today.getDate();
+            var month = today.getMonth() + 1;
+            var year = today.getFullYear();
+            var j = today.
+            m = checkTime(m);
+            s = checkTime(s);
+            document.getElementById('clock').innerHTML =
+                d + "." + month + "." + year + ": " + checkTime(h) + ":" + checkTime(m) + ":" + checkTime(s);
+            var t = setTimeout(startTime, 500);
+        }
+        function checkTime(i) {
+            if (i < 10) {i = "0" + i};
+            return i;
+        }
+    </script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -12,6 +33,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
     <!-- Scripts -->
     <script>
         window.Laravel = {!! json_encode([
@@ -19,8 +41,8 @@
         ]) !!};
     </script>
 </head>
-<body>
-    <div id="app" style="width: 98% !important; margin-left: 1%; min-width: 500px;">
+<body onload="startTime()">
+    <div id="app">
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
@@ -32,10 +54,11 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+                    <p id="date"></p>
+                    <div id="clock"></div>
+                    <a class="navbar-brand" href="{{ route('home') }}">
+                        Coursework 2017
                     </a>
                 </div>
 
@@ -59,14 +82,18 @@
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
-                                        <a href=" {{ route('home') }}">
-                                            Home page
+                                        <a href="{{ route('home') }}">
+                                            Home
                                         </a>
-                                        <a href=" {{ route('profile') }}">
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('profile') }}">
                                             Profile
                                         </a>
+                                    </li>
+                                    <li>
                                         <a href="{{ route('logout') }}"
-                                           onclick="event.preventDefault();
+                                            onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                             Logout
                                         </a>
@@ -80,16 +107,11 @@
                         @endif
                     </ul>
                 </div>
+                @yield('navigation')
             </div>
         </nav>
-        @yield('navigation')
-        {{csrf_field()}}
-        <div class="panel panel-default">
-            <div class="panel-heading"><h1 style="text-align: center;"> @yield("site_head")</h1></div>
-            @yield('content')
-        </div>
+        @yield('content')
     </div>
-
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
