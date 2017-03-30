@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class Player extends Model
 {
     protected $fillable = [
-        'tribe', "acticeCity", 'id'
+        'tribe', "acticeCity", 'user_id', 'created_at'
     ];
     protected $primaryKey = 'user_id';
 

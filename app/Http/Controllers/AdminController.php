@@ -7,19 +7,16 @@ use App\Http\Middleware\AdminMiddleware;
 use App\User;
 use Illuminate\Http\Request;
 use App\Player;
+use Illuminate\Support\Facades\DB;
 use League\Flysystem\Exception;
+
 
 class AdminController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('admin');
-    }
 
     public function index()
     {
-        $players = Player::all();
-        return view('admin', compact('players'));
+        return view('admin/adminPlayers');
     }
     public function map()
     {
@@ -33,9 +30,14 @@ class AdminController extends Controller
         return view('log');
 
     }
-    public function deleteUser()
+    public function deleteUser(Request $request)
     {
+        $deleteId = $request->user_id;
+       return User::safelyDelete($deleteId);
 
-        return back();
+    }
+    public function usersJson()
+    {
+        return User::getUserPlayerList();
     }
 }

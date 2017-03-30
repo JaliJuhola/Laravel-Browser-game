@@ -6,6 +6,7 @@ use App\Army;
 use App\BattleSimulation;
 use App\City;
 use App\Jobs\Troopsready;
+use App\Player;
 use App\Tribe\BasicTribe;
 use App\TroopQueue;
 use App\TroopUnit;
@@ -20,7 +21,7 @@ class ArmyController extends Controller implements ShouldQueue
 
     function attackToCity($id, Request $request)
     {
-        $attackerCityId = $request->session()->get('activeCity');
+        $attackerCityId = Player::getActiveCity()->id;
         $defenderCityId = $id;
         $attackerA = Army::all()->where('city_id', '=', $attackerCityId)->first();
         $defenderA = Army::all()->where('city_id', '=', $defenderCityId)->first();

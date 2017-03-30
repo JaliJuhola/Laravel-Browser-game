@@ -15,7 +15,8 @@ class CreateCitysTable extends Migration
             $table->string('name', 100)->default('New City');
             $table->integer('player_id')->unsigned();
             $table->foreign('player_id')
-                ->references('user_id')->on('players');
+                ->references('user_id')->on('players')
+                ->onDelete('cascade');
             $table->integer('xCord')->nullable(true);
             $table->integer('yCord')->nullable(true);
             $table->timestamps();

@@ -1,7 +1,13 @@
 <?php
 use Illuminate\Support\Facades\Auth;
-
-
+Route::get("userCities.json", 'CityController@usersCitiesJson')->name("userCities.json");
+Route::get("city/userCities.json", 'CityController@usersCitiesJson')->name("city/userCities.json");
+Route::get('/city/cityView.json', "CityController@cityJson");
+Route::get('adminPlayers.json',  "AdminController@usersJson");
+Route::post('deleteAdminXHTML', "AdminController@deleteUser");
+Route::post('setActive', "CityController@setActive");
+Route::post('city/setActive', "CityController@setActive");
+Route::post('city/city/setActive', "CityController@setActive");
 Route::get('/', function () {
     return view('welcome');
 });
@@ -12,7 +18,6 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/player/create', 'PlayerController@index')
         ->name('player/create');
-
     Route::post('/player/save', 'PlayerController@save')
         ->name('player/save');
 
@@ -33,8 +38,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('city/update/name', "CityController@updateName")->name('city/update/name');
         Route::post("army/train/{id}", "ArmyController@addTroops")->name("army/train/{id}");
         Route::post('/city/{id}/attack', 'ArmyController@attackToCity');
+        Route::post('addCity', 'CityController@addCity')->name('addCity');
     });
 });
-Route::get('cityView.json', "CityController@cityJson");
 Auth::routes();
 });

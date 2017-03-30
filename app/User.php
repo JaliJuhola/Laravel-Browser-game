@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -15,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password'
     ];
 
     /**
@@ -24,20 +25,32 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'remember_token', 'password'
     ];
+
     public static function safelyDelete($id)
     {
-        User::where('id', $id)->delete();
-        Player::deleteSafely($id);
+       Gameworld::clearUsersCities($id); // clears references to users cities from map
+        // Here should be added more values to delete when deleting whole user
+        return self::where('id', $id)->delete();
     }
+
     public function player()
     {
         return $this->hasOne('App\\Player');
 
     }
+
     public function cities()
     {
         return count($this->player()->cities());
+    }
+
+    public static function getUserPlayerList()
+    {
+        return DB::table('players')->select('Tribe', 'user_id', 'created_at')
+            ->join('users', 'users.id', '=', 'players.user_id')
+            ->select('Tribe','user_id', 'name', 'email', 'players.created_at')
+            ->get();
     }
 }

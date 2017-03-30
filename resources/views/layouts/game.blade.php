@@ -27,11 +27,27 @@
                 <button id="playersView" type="button" class="btn btn-default">Players</button>
             </a>
         </div>
+        @if(\Illuminate\Support\Facades\Auth::user()->isAdmin)
+            <div class="btn-group" role="group">
+                <li class="dropdown" style=" list-style-type: none;">
+                    <button
+                            class="btn btn-default"
+                            type="button" style="decoration: none;"
+                            data-toggle="dropdown" href="#">Admin
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{route("/admin")}}">Players</a></li>
+                        <li><a href="#">Map</a></li>
+                        <li><a href="#">Log</a></li>
+                    </ul>
+                </li>
+            </div>
+        @endif
     </div>
 @endsection
 @section ("content")
-<div class="container" style="width: 96%; ">
-    <div class="row">
+    <div class="container" style="width: 96%; ">
+        <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading"><h1 style="text-align: center">
                         @yield('site_head')
@@ -39,6 +55,9 @@
                 </div>
                 @yield('mainarea')
             </div>
+        </div>
     </div>
-</div>
+@endsection
+@section('sidenav')
+    <citiesside></citiesside>
 @endsection

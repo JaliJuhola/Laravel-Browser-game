@@ -1,26 +1,7 @@
 <!DOCTYPE html>
-<html lang="{{ config('app.locale') }}">
+<html style="height: 100% !important;" lang="{{ config('app.locale') }}">
 <head>
-    <script>
-        function startTime() {
-            var today = new Date();
-            var h = today.getHours() - 2;
-            var m = today.getMinutes();
-            var s = today.getSeconds();
-            var d = today.getDate();
-            var month = today.getMonth() + 1;
-            var year = today.getFullYear();
-            var j = today.
-            m = checkTime(m);
-            s = checkTime(s);
-            document.getElementById('clock').innerHTML =
-                d + "." + month + "." + year + ": " + checkTime(h) + ":" + checkTime(m) + ":" + checkTime(s);
-            var t = setTimeout(startTime, 500);
-        }
-        function checkTime(i) {
-            if (i < 10) {i = "0" + i};
-            return i;
-        }
+    <script src="/ht/public/js/clock.js">
     </script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -41,8 +22,11 @@
         ]) !!};
     </script>
 </head>
-<body onload="startTime()">
-    <div id="app">
+<body onload="startTime()" style="height: 100%!important;">
+    <div id="app" style="min-height: 100%!important;
+    margin-bottom: -100px;
+    padding-bottom: 100px;
+    box-sizing: border-box;">
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
@@ -111,9 +95,14 @@
             </div>
         </nav>
         @yield('content')
+        @yield('sidenav')
     </div>
-
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
+<footer style="width: 100%!important; margin-left: auto !important; margin-right: auto !important;">
+    <div id="footer" style="text-align: center !important; width: 100%!important; margin-left: auto !important; margin-right: auto !important;">WWW-programming course
+        <a style="margin-left: auto !important; margin-right: auto !important;" href="http://www.uta.fi/sis/tie/wo/index.html"target="_blank">
+            Course website</a></div>
+</footer>
 </html>

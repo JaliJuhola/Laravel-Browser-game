@@ -16,7 +16,9 @@ class MakeTroopunitsTable extends Migration
         Schema::create('troopunits', function (Blueprint $table) { // i know that its cities tho xD
             $table->string('troopname', 100);
             $table->integer('amount')->unsigned();
-            $table->integer('army_id')->unsigned();
+            $table->integer('army_id')->unsigned()
+            ->references('id')->on('armys')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

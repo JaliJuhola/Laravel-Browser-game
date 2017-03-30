@@ -5,6 +5,5 @@
 @section('mainarea')
     <div id="app">
         <example></example>
-        <trooplist></trooplist>
     </div>
 @endsection

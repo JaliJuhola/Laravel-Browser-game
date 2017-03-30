@@ -62,4 +62,12 @@ class Gameworld extends Model
             ['yCord', '=', $yCord]
         ])->whereNotNull('city_id');
     }
+    public static function clearUsersCities($user_id)
+    {
+        $cities = City::getPlayersCities($user_id);
+        foreach ($cities as $city) {
+            self::where('city_id', '=', $city->city_id)
+                ->update(['city_id' => null]);
+        }
+    }
 }
