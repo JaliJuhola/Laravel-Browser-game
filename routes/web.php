@@ -7,6 +7,7 @@ Route::post('setActive', "CityController@setActive");
 Route::post('city/setActive', "CityController@setActive");
 Route::post('city/city/setActive', "CityController@setActive");
 Route::post('deleteAdminCity', "AdminController@deleteCity");
+Route::get('mapSquares.json', "GameworldController@mapJson");
 Route::get('/', function () {
     return view('welcome');
 });
@@ -43,7 +44,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('city/update/name', "CityController@updateName")->name('city/update/name');
         Route::post("army/train/{id}", "ArmyController@addTroops")->name("army/train/{id}");
         Route::post('/city/{id}/attack', 'ArmyController@attackToCity');
-        Route::post('/addCity/{xCord}/{yCord}', 'CityController@addCity');
         Route::post('addCity', 'CityController@addCity')->name('addCity');
         Route::get('/square/{xCord}/{yCord}', function ($xCord, $yCord) {
             $square = \App\Gameworld::where('xCord', '=', $xCord)

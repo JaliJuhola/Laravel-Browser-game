@@ -1,6 +1,6 @@
 <template>
     <div class="panel panel-default">
-        <div class="panel-heading">Example Componeasdtta123</div>
+        <div class="panel-heading">Players list</div>
         <table class="table">
             <thead>
             <tr>

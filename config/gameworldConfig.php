@@ -1,10 +1,10 @@
 <?php
 return array(
     "worldsize" => [
-        "xStarts" => -3,
-        "xEnds" => 3,
-        "yStarts" => -3,
-        "yEnds" => 3
+        "xStarts" => -4,
+        "xEnds" => 4,
+        "yStarts" => -4,
+        "yEnds" => 4,
     ],
     "initusers" => [
         [

@@ -186,10 +186,12 @@
             {
                 if (this.visible > 0) {
                     this.visible = this.visible - 1;
-                    this.announcement = this.announcements[this.visible];
-                    this.error = "";
-                    this.message = "";
+                } else if(this.visible == 0 && this.announcement.length > 1) {
+                    this.visible = this.visible +1;
                 }
+                this.announcement = this.announcements[this.visible];
+                this.error = "";
+                this.message = "";
             },
             toggleAdminView()
             {

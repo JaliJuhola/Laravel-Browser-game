@@ -5,10 +5,19 @@
     <small>Owned by {{$owner->name}}</small>
 @endsection
 @section('mainarea')
+    <a style="width: 140px !important;
+     height: 30px !important;" href="{{route('/map')}}">
+        <button class="btn-primary" style="width: 140px !important; height: 30px !important;" >Move to map
+        </button></a>
     <br/>
+    <br/>
+    <br/>
+    <div style="width: 100%;">
+    <div style="margin-left: auto; margin-right: auto;">
     <form method="post" action="/ht/public/city/3/attack">
-        <input type="submit" class="btn btn-primary" value="Attack this city">
+        <input type="submit" class="btn btn-danger" value="Attack this city">
     {{csrf_field()}}</form>
     <br/>
-    <a class="btn btn-primary" href="#EiToimi2">Send your troops to this city</a>
+    </div>
+    </div>
 @endsection

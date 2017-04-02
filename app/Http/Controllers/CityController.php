@@ -23,24 +23,26 @@ class CityController extends Controller
         Player::setActiveCity($newActive);
         return $this->usersCitiesJson();
     }
+
     public function cityJson(Request $request)
     {
         $city = Player::getActiveCity();
-        if($city) {
+        if ($city) {
             $user = $this->getCityViewItems($city, $request);
             return json_encode($user);
         }
         return ['taalla virhe'];
     }
+
     public function usersCitiesJson()
     {
         return json_encode(City::getPlayersCities(Auth::user()->id));
     }
+
     public function index($id = -1, Request $request)
     {
-        if($id === -1)
-        {
-           return $this->undefinendCityId($request);
+        if ($id === -1) {
+            return $this->undefinendCityId($request);
         }
         return $this->definedCityId($id, $request);
     }
@@ -52,6 +54,7 @@ class CityController extends Controller
         City::where('id', "=", $id)->update(['name' => $name]);
         return back();
     }
+
     private function getCityViewItems($city, Request $request)
     {
         $army = Army::all()->where('city_id', '=', $city->id)->first();
@@ -62,12 +65,12 @@ class CityController extends Controller
         return ['troopqueue' => $troopqueue, 'city' => $city, 'square' => $square, 'army' => $army,
             'troopUnits' => $troopUnits];
     }
+
     private function definedCityId($id, Request $request)
     {
         $city = City::all()->where('id', "=", $id)->first();
         $owner = User::where('id', '=', $city->player_id)->first();
-        if($city === null)
-        {
+        if ($city === null) {
             return view('home', ['status' => 'City not found']);
         }
         if ($city->player_id === Auth::user()->id) { // if player owns city returns cityview whit troops etc
@@ -76,14 +79,14 @@ class CityController extends Controller
             return view('cityview', ['city' => $city, 'owner' => $owner]);
         }
     }
+
     private function undefinendCityId(Request $request)
     {
         $activeCity = Player::getActiveCity();
-        if($activeCity)
-        {
+        if ($activeCity) {
             $city = City::all()->where('player_id', '=', Auth::user()->id)
-                    ->where('id', '=', $activeCity->id)->first();
-            if($city !== null) {
+                ->where('id', '=', $activeCity->id)->first();
+            if ($city !== null) {
                 return view('city', $this->getCityViewItems($city, $request));
             }
         }
@@ -94,15 +97,19 @@ class CityController extends Controller
             }
         }
     }
-    public function addCity(Request $request, $xCord = -1, $yCord = -1)
+
+    public function addCity(Request $request, $xCord = -1000, $yCord = -1000)
     {
-        if($xCord === -1 && $yCord == -1)
-        {
-            $city_name = $request->get('city_name');
-            $id = Gameworld::addCity(0, 0, ['name' => $city_name, 'player_id' => Auth::user()->id], "BasicTribe");
+
+        if (isset($request->xCord) && isset($request->yCord)) {
+            $xCord = $request->xCord;
+            $yCord = $request->yCord;
+        }
+        if ($xCord === -1000 && $yCord === -1000) {
+            $id = Gameworld::addCity(0, 0, ['player_id' => Auth::user()->id], "BasicTribe");
             Player::setActiveCity($id);
         } else {
-           $id = Gameworld::addCity($xCord, $yCord, ['player_id' => Auth::user()->id], 'BasicTribe');
+            $id = Gameworld::addCity($xCord, $yCord, ['player_id' => Auth::user()->id], 'BasicTribe');
             Player::setActiveCity($id);
         }
         return redirect(route('city'));

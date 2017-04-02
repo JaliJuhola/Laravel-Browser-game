@@ -28,7 +28,10 @@ class PlayerController extends Controller
     }
     public function playersIndex()
     {
-        $users = User::all();
+        $users = User::join('players', 'players.user_id', 'users.id')
+        ->select(['id' => 'users.id', 'tribe' => 'players.Tribe',
+            'name' => 'users.name', 'created_at' => 'players.created_at'])
+        ->get();
         return view('players', ['users' => $users]);
     }
     public static function deleteSafely($id)

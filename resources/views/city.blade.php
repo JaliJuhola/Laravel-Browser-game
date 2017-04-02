@@ -9,6 +9,10 @@
         <small>Capital</small>@endif
 @endsection
 @section('mainarea')
+    <a style="width: 140px !important;
+     height: 30px !important;" href="{{route('/map')}}">
+        <button class="btn-primary" style="width: 140px !important; height: 30px !important;" >Move to map
+        </button></a>
     <div style="height: 400px;">
     <div style="margin-top: 23px;">
     <trooplist></trooplist>
