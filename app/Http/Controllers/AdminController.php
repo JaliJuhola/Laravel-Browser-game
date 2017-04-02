@@ -50,7 +50,7 @@ class AdminController extends Controller
     {
         $userInfo =  User::all()->where('id', '=', $user_id)
             ->join('player', "player.user_id", "user.id")
-            ->join('citys', 'player.user_id', "cities.player_id");
+            ->join('citys', 'player.user_id', "cities.player_id")
         ->select(["citys.id as city_id", "users.name as username", "citys.name as cityname"]);
         return json_encode($userInfo);
     }
