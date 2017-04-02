@@ -20,7 +20,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/player/save', 'PlayerController@save')
         ->name('player/save');
 
-    Route::group(['admin' => 'admin'], function() {
+    Route::group(['middleware' => 'admin'], function() {
+        Route::post('admin/announcements/delete', "AdminController@deleteAnnouncement");
+        Route::post('admin/announcements/change', "AdminController@updateAnnouncement");
+        Route::post('admin/announcements/save', "AdminController@saveAnnouncement");
         Route::get('/admin', 'AdminController@index')->name('/admin');
         Route::post('/admin/user/delete', 'AdminController@deleteUser')->name('/admin/delete/user');
         Route::get('/admin/map', 'AdminController@map')->name('/admin/map');
@@ -31,6 +34,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/user/profile', "UserController@index")->name('profile');
     Route::post('/user/delete', 'UserController@delete')->name('user/delete');
     Route::group(['middleware' => 'accountVerified'], function () {
+        Route::get('announcements.json', 'HomeController@announcementsJson');
         Route::get('/home', 'HomeController@index')->name('home');
         Route::get('/city/view', 'CityController@index')->name('city');
         Route::get('/city/{id}', 'CityController@index')->name('city/view/{id}');

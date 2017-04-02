@@ -12279,22 +12279,197 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            cityMessage: "Tassa on viesti!"
+            announcements: [],
+            announcement: null,
+            visible: 0,
+            error: "",
+            isAdmin: false,
+            canToggle: false,
+            toggleAdmin: false,
+            message: ""
         };
+    },
+    created: function created() {
+        var _this = this;
+
+        axios.get('announcements.json').then(function (response) {
+            _this.announcements = response.data.announcements;
+            _this.toggleAdmin = _this.canToggle = _this.isAdmin = response.data.isAdmin;
+            if (_this.announcements.length > 0) {
+                _this.announcement = _this.announcements[0];
+                _this.visible = 0;
+            }
+        }).catch(function (error) {
+            console.log("Error when retrieving announcements");
+        });
+        this.checkEmpty();
     },
 
     methods: {
-        settle: function settle() {
-            var name = document.getElementById("city_name_input").value;
-            axios.post('addCity', { city_name: name }).then(function (response) {
-                console.log('User city added!');
+        changeAnnouncement: function changeAnnouncement($id) {
+            var _this2 = this;
+
+            var heading = document.getElementById("textAreaHeading").value;
+            var annobody = document.getElementById("textAreaBody").value;
+
+            if (this.validateInput(heading, annobody)) {
+                axios.post('admin/announcements/change', { id: $id, announcementBody: annobody, heading: heading }).then(function (response) {
+                    _this2.announcements = response.data;
+                    _this2.announcement = _this2.announcements[_this2.visible];
+                    _this2.error = "";
+                    _this2.message = "Announcement has been updated!";
+                });
+            }
+            this.checkEmpty();
+        },
+        saveAnnouncement: function saveAnnouncement() {
+            var _this3 = this;
+
+            var heading = document.getElementById("textAreaHeading").value;
+            var annobody = document.getElementById("textAreaBody").value;
+
+            if (this.validateInput(heading, annobody)) {
+                axios.post('admin/announcements/save', { announcementBody: annobody, heading: heading }).then(function (response) {
+                    _this3.announcements = response.data;
+                    _this3.announcement = _this3.announcements[_this3.visible];
+                    _this3.error = "";
+                    _this3.message = "New announcement has been created!";
+                });
+            }
+            this.checkEmpty();
+        },
+        validateInput: function validateInput($heading, $body) {
+            if ($heading.length < 4) {
+                this.error = "Heading should be at least 4 character long";
+                this.message = "";
+                return false;
+            }
+            if ($body.length < 10) {
+                this.error = "Body should be at least 10 characters long";
+                this.message = "";
+                return false;
+            }
+            return true;
+        },
+        nextAnnouncement: function nextAnnouncement() {
+            this.visible = this.visible + 1;
+            this.announcement = this.announcements[this.visible];
+            this.error = "";
+            this.message = "";
+        },
+        previousAnnouncement: function previousAnnouncement() {
+            if (this.visible > 0) {
+                this.visible = this.visible - 1;
+                this.announcement = this.announcements[this.visible];
+                this.error = "";
+                this.message = "";
+            }
+        },
+        toggleAdminView: function toggleAdminView() {
+            this.toggleAdmin = !this.toggleAdmin;
+            this.error = "";
+            this.message = "";
+        },
+        deleteAnnouncement: function deleteAnnouncement($id) {
+            var _this4 = this;
+
+            axios.post('admin/announcements/delete', { id: $id }).then(function (response) {
+                _this4.announcements = response.data;
+                _this4.previousAnnouncement();
+                _this4.message = "Announcement has been deleted!";
+                _this4.checkEmpty();
             });
-            var messageBox = document.getElementById("cityaddmessage");
-            messageBox.innerHTML = "City " + name + " successfully settled!";
+        },
+        checkEmpty: function checkEmpty() {
+            if (this.announcements.length === 0) {
+                this.announcement = {
+                    "heading": "There are no announcements!",
+                    "body": "Empty",
+                    "created_at": " "
+                };
+            }
         }
     }
 });
@@ -32266,42 +32441,137 @@ if (false) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "container"
-  }, [_c('div', {
+    staticClass: "container",
+    staticStyle: {
+      "text-align-last": "center"
+    }
+  }, [(_vm.toggleAdmin) ? _c('span', [_c('div', {
     staticClass: "row"
   }, [_c('div', {
-    staticClass: "col-md-8 col-md-offset-2"
-  }, [_c('div', {
-    staticClass: "panel panel-default"
-  }, [_c('div', {
-    staticClass: "panel-heading"
-  }, [_vm._v("Add city")]), _vm._v(" "), _c('div', {
-    staticClass: "panel-body"
-  }, [_vm._v("\n                    Name: "), _c('input', {
+    staticClass: "col-lg-16"
+  }, [_c('h1', [_c('textarea', {
     attrs: {
-      "type": "text",
-      "id": "city_name_input"
+      "id": "textAreaHeading"
     }
-  }), _vm._v(" "), _c('button', {
-    staticClass: "btn-primary",
+  }, [_vm._v(_vm._s(_vm.announcement.heading))])]), _vm._v(" "), _c('button', {
+    staticClass: "btn-danger",
     attrs: {
-      "type": "button"
+      "type": "submit"
     },
     on: {
       "click": function($event) {
-        _vm.settle()
+        _vm.deleteAnnouncement(_vm.announcement.id)
       }
     }
-  }, [_vm._v("Settle\n                    ")]), _vm._v(" "), _c('br'), _vm._v(" "), _c('br'), _vm._v(" "), _c('div', {
+  }, [_vm._v("Delete announcement\n            ")]), _vm._v(" "), _c('br'), _vm._v(" "), _c('p', {
+    staticClass: "lead"
+  }, [_vm._v("\n                by "), _c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v(_vm._s(_vm.announcement.name))])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('b', [_c('p', [_c('span', {
+    staticClass: "glyphicon glyphicon-time"
+  }), _vm._v(_vm._s(_vm.announcement.created_at))])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('p', {
+    staticClass: "lead"
+  }), _c('p', [_c('textarea', {
+    attrs: {
+      "rows": "10",
+      "cols": "50",
+      "id": "textAreaBody"
+    }
+  }, [_vm._v(_vm._s(_vm.announcement.body))])]), _vm._v(" "), _c('p')]), _vm._v(" "), _c('button', {
+    staticClass: "btn-primary",
+    attrs: {
+      "type": "submit"
+    },
+    on: {
+      "click": function($event) {
+        _vm.changeAnnouncement(_vm.announcement.id)
+      }
+    }
+  }, [_vm._v("Update announcement")]), _vm._v(" "), _c('button', {
+    staticClass: "btn-default",
+    attrs: {
+      "type": "submit"
+    },
+    on: {
+      "click": function($event) {
+        _vm.saveAnnouncement()
+      }
+    }
+  }, [_vm._v("\n                 Save annoucement as new announcement\n             ")])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('br'), _vm._v(" "), (_vm.error) ? _c('span', {
+    staticClass: "label-warning",
+    staticStyle: {
+      "color": "white"
+    }
+  }, [_vm._v("\n            " + _vm._s(_vm.error) + "\n        ")]) : _vm._e(), _vm._v(" "), (_vm.message) ? _c('span', {
     staticClass: "label-success",
     staticStyle: {
-      "width": "250px",
-      "margin-left": "20px"
-    },
-    attrs: {
-      "id": "cityaddmessage"
+      "color": "white"
     }
-  })])])])])])
+  }, [_vm._v("\n            " + _vm._s(_vm.message) + "\n        ")]) : _vm._e(), _vm._v(" "), _c('br'), _vm._v(" "), (_vm.visible > 0) ? _c('span', [_c('button', {
+    staticClass: "btn-link",
+    on: {
+      "click": function($event) {
+        _vm.previousAnnouncement()
+      }
+    }
+  }, [_vm._v("\n        Previous\n    ")])]) : _vm._e(), _vm._v(" "), (_vm.visible + 1 < _vm.announcements.length) ? _c('span', [_c('button', {
+    staticClass: "btn-link",
+    on: {
+      "click": function($event) {
+        _vm.nextAnnouncement()
+      }
+    }
+  }, [_vm._v("\n        Next\n    ")])]) : _vm._e()]) : _c('span', [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-lg-16"
+  }, [_c('h1', [_vm._v(_vm._s(_vm.announcement.heading))]), _vm._v(" "), _c('p', {
+    staticClass: "lead"
+  }, [_vm._v("\n                by "), _c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v(_vm._s(_vm.announcement.name))])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('b', [_c('p', [_c('span', {
+    staticClass: "glyphicon glyphicon-time"
+  }), _vm._v(_vm._s(_vm.announcement.created_at))])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('p', {
+    staticClass: "lead"
+  }), _c('p', [_vm._v(_vm._s(_vm.announcement.body) + " ")]), _vm._v(" "), _c('p')])]), _vm._v(" "), _c('hr'), _vm._v(" "), (_vm.visible > 0) ? _c('span', [_c('button', {
+    staticClass: "btn-link",
+    on: {
+      "click": function($event) {
+        _vm.previousAnnouncement()
+      }
+    }
+  }, [_vm._v("\n        Previous\n    ")])]) : _vm._e(), _vm._v(" "), (_vm.visible + 1 < _vm.announcements.length) ? _c('span', [_c('button', {
+    staticClass: "btn-link",
+    on: {
+      "click": function($event) {
+        _vm.nextAnnouncement()
+      }
+    }
+  }, [_vm._v("\n        Next\n    ")])]) : _vm._e()]), _vm._v(" "), _c('br'), _vm._v(" "), (_vm.canToggle) ? _c('span', [(_vm.toggleAdmin) ? _c('span', [_c('button', {
+    staticClass: "btn-default",
+    attrs: {
+      "type": "submit"
+    },
+    on: {
+      "click": function($event) {
+        _vm.toggleAdminView()
+      }
+    }
+  }, [_vm._v("Toggle user view")])]) : _c('span', [_c('button', {
+    staticClass: "btn-default",
+    attrs: {
+      "type": "submit"
+    },
+    on: {
+      "click": function($event) {
+        _vm.toggleAdminView()
+      }
+    }
+  }, [_vm._v("Toggle admin view")])])]) : _vm._e()])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

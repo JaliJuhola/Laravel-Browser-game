@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Announcement;
 use App\City;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -28,5 +30,11 @@ class HomeController extends Controller
         $city = City::all()->where('player_id', '=', Auth::user()->id)->first();
         $request->session()->put('activeCity', $city->id);
         return view('home', ['city' => $city]);
+    }
+    public function announcementsJson()
+    {
+        $isAdmin = Auth::user()->isAdmin;
+        $announcements =  Announcement::getAll();
+        return ["announcements" => $announcements, "isAdmin" => $isAdmin];
     }
 }

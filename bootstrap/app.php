@@ -40,7 +40,7 @@ $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
     App\Exceptions\Handler::class
 );
-
+date_default_timezone_set('Europe/Helsinki');
 /*
 |--------------------------------------------------------------------------
 | Return The Application
