@@ -61,7 +61,7 @@
                     this.troopQueue = response.data.troopqueue;
                 })
                 .catch(function (error) {
-                    console.log("VITU ERROR");
+                    console.log("Error loading cityinfo");
                 });
         },
         methods: {
