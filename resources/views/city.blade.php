@@ -23,7 +23,7 @@
                     <h4>Train troops</h4>
                 </div>
                 <div class="panel-body">
-    <form action="/ht/public/army/train/{{$army->id}}" method="post">
+    <form action="/army/train/{{$army->id}}" method="post">
         {{csrf_field()}}
         @foreach($troopUnits as $unit)
                 <div class="form-group form-group-sm">

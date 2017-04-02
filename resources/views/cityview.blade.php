@@ -14,7 +14,7 @@
     <br/>
     <div style="width: 100%;">
     <div style="margin-left: auto; margin-right: auto;">
-    <form method="post" action="/ht/public/city/3/attack">
+    <form method="post" action="/city/3/attack">
         <input type="submit" class="btn btn-danger" value="Attack this city">
     {{csrf_field()}}</form>
     <br/>

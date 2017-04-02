@@ -87,7 +87,7 @@
         methods: {
             citySquare(id)
             {
-                window.location.href = "/ht/public/city/" + id;
+                window.location.href = "/ht.jalijuhola.xyz/city/" + id;
             },
             emptySquare(xCord, yCord)
             {
@@ -146,7 +146,7 @@
             {
                 axios.post('addCity', {xCord: this.activeX, yCord: this.activeY})
                     .then((response) => {
-                        window.location.href = "/ht/public/city/view";
+                        window.location.href = "/ht.jalijuhola.xyz/city/view";
                     });
             }
         }
