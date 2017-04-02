@@ -4,7 +4,8 @@ Players
 @endsection
 @section("mainarea")
     <?php use App\User;
-    use App\Player;?>
+    use App\Player;?>'
+    <br/>
     <hr>
     <div class="main-box no-header clearfix">
         <div class="main-box-body clearfix">

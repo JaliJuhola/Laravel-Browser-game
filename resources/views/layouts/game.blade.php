@@ -53,6 +53,16 @@
                         @yield('site_head')
                     </h1>
                 </div>
+
+                @if (Session::has('message'))
+                    <div style="color: white; width: 400px;
+                 text-align: center;margin-left: auto; margin-right: auto;"
+                         class="label-success">{{ Session::get('message') }}</div>
+                @endif
+                @if (Session::has('error'))
+                    <div style="color: white; width: 400px; margin-left: auto;
+                 text-align: center;margin-right: auto;" class="label-warning">{{ Session::get('error') }}</div>
+                @endif
                 @yield('mainarea')
             </div>
         </div>

@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Army;
 use App\BattleSimulation;
-use App\City;
-use App\Jobs\Troopsready;
 use App\Player;
 use App\Tribe\BasicTribe;
 use App\TroopQueue;
@@ -13,6 +11,7 @@ use App\TroopUnit;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 
 class ArmyController extends Controller implements ShouldQueue
@@ -69,6 +68,8 @@ class ArmyController extends Controller implements ShouldQueue
              //       ->delay(Carbon::now()->addSecond($item::$trainingSpeed * $amount));
               //  dispatch($job);
             }
+            Session::flash('message', "Troops succesfully added to queue");
+            return back();
 
         }
         self::troopsReady();

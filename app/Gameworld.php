@@ -31,7 +31,6 @@ class Gameworld extends Model
             ['yCord', '=', $yCord],
         ])->whereNull('city_id')->get()->first();
         $id = City::createCity($cityInfo, $tribe);
-
         if ($square != null) { // Square not occupied possible to add.
             $square->city_id = $id;
             Gameworld::where('composite_key_fail', '=', $square->composite_key_fail)
@@ -49,12 +48,9 @@ class Gameworld extends Model
             Gameworld::where('composite_key_fail', '=', $square->composite_key_fail)
                 ->update(['city_id' => $id]);
         }
+        return $id;
     }
 
-    /*
-     * Returns null if this gameworld
-     * Maybe a bit prototype
-     */
     public static function getCity($xCord, $yCord)
     {
         return DB::table('gameworld')->where([
@@ -69,5 +65,12 @@ class Gameworld extends Model
             self::where('city_id', '=', $city->city_id)
                 ->update(['city_id' => null]);
         }
+    }
+    public static function deleteCity($city_id)
+    {
+        // Additional delete information here xD
+        City::where('id','=', $city_id)
+            ->delete();
+        return true;
     }
 }

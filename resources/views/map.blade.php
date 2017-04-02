@@ -5,29 +5,28 @@
 @section('mainarea')
     <div class="panel panel-info" style="width: 80%">
         <div style="margin-left: auto; margin-right: auto;">
-        @foreach($gameworld as $item)
-            <a href="/ht/public/city/{{$item->city_id}}">
+            <br/>
+            @foreach($gameworld as $item)
                 <button>
                     <?php $namePrinted = false;?>
                     @foreach($cities as $city)
                         @if($city->id === $item->city_id)
-                            {{$city->name}}
+                            <a href="/ht/public/city/{{$item->city_id}}">
+                                {{$city->name}}
+                            </a>
                             <?php $namePrinted = true; ?>
                         @endif
-
                     @endforeach
-                    <?php
-                    if (!$namePrinted) {
-                        echo "X: $item->xCord Y: $item->yCord";
-                    }
-                    ?>
+                    @if (!$namePrinted)
+                        <a href="/ht/public/square/{{$item->xCord}}/{{$item->yCord}}">
+                            X: {{$item->xCord}} Y: {{$item->yCord}}
+                        </a>
+                    @endif
                 </button>
-            </a>
-            @if($item->xCord === 3)
-                <br/>
+                @if($item->xCord === 3)
+                    <br/>
                 @endif
-                @endforeach
-                </ul>
+            @endforeach
         </div>
     </div>
 @endsection

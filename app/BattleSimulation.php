@@ -54,9 +54,11 @@ class BattleSimulation
                     $attackPower = $attackPower - ($defUnit->amount * $defTroopPower);
                     $defUnit->amount = 0;
                 } else {
-                    $removed = $attackPower / $defTroopPower;
-                    $defUnit->amount = $defUnit->amount - $removed;
-                    $attackPower = 0;
+                    if($attackPower > 1) {
+                        $removed = $attackPower / $defTroopPower;
+                        $defUnit->amount = $defUnit->amount - $removed;
+                        $attackPower = 0;
+                    }
                 }
             }
             foreach ($attacker as $atUnit) {

@@ -36,7 +36,6 @@ class CityController extends Controller
     {
         return json_encode(City::getPlayersCities(Auth::user()->id));
     }
-
     public function index($id = -1, Request $request)
     {
         if($id === -1)
@@ -95,11 +94,18 @@ class CityController extends Controller
             }
         }
     }
-    public function addCity(Request $request)
+    public function addCity(Request $request, $xCord = -1, $yCord = -1)
     {
-        $city_name = $request->get('city_name');
-        Gameworld::addCity(0, 0, ['name' => $city_name, 'player_id' => Auth::user()->id], "BasicTribe");
-        return back();
+        if($xCord === -1 && $yCord == -1)
+        {
+            $city_name = $request->get('city_name');
+            $id = Gameworld::addCity(0, 0, ['name' => $city_name, 'player_id' => Auth::user()->id], "BasicTribe");
+            Player::setActiveCity($id);
+        } else {
+           $id = Gameworld::addCity($xCord, $yCord, ['player_id' => Auth::user()->id], 'BasicTribe');
+            Player::setActiveCity($id);
+        }
+        return redirect(route('city'));
     }
 
 }

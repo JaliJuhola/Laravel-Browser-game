@@ -5,7 +5,6 @@
     <small>Owned by {{$owner->name}}</small>
 @endsection
 @section('mainarea')
-
     <br/>
     <form method="post" action="/ht/public/city/3/attack">
         <input type="submit" class="btn btn-primary" value="Attack this city">

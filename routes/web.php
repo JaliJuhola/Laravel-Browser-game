@@ -3,11 +3,10 @@ use Illuminate\Support\Facades\Auth;
 Route::get("userCities.json", 'CityController@usersCitiesJson')->name("userCities.json");
 Route::get("city/userCities.json", 'CityController@usersCitiesJson')->name("city/userCities.json");
 Route::get('/city/cityView.json', "CityController@cityJson");
-Route::get('adminPlayers.json',  "AdminController@usersJson");
-Route::post('deleteAdminXHTML', "AdminController@deleteUser");
 Route::post('setActive', "CityController@setActive");
 Route::post('city/setActive', "CityController@setActive");
 Route::post('city/city/setActive', "CityController@setActive");
+Route::post('deleteAdminCity', "AdminController@deleteCity");
 Route::get('/', function () {
     return view('welcome');
 });
@@ -25,6 +24,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/admin', 'AdminController@index')->name('/admin');
         Route::post('/admin/user/delete', 'AdminController@deleteUser')->name('/admin/delete/user');
         Route::get('/admin/map', 'AdminController@map')->name('/admin/map');
+        Route::get('adminPlayers.json',  "AdminController@usersJson");
+        Route::post('deleteAdminXHTML', "AdminController@deleteUser");
     });
     Route::post('/user/profile/update', 'UserController@update')->name('profile/update');
     Route::get('/user/profile', "UserController@index")->name('profile');
@@ -38,7 +39,19 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('city/update/name', "CityController@updateName")->name('city/update/name');
         Route::post("army/train/{id}", "ArmyController@addTroops")->name("army/train/{id}");
         Route::post('/city/{id}/attack', 'ArmyController@attackToCity');
+        Route::post('/addCity/{xCord}/{yCord}', 'CityController@addCity');
         Route::post('addCity', 'CityController@addCity')->name('addCity');
+        Route::get('/square/{xCord}/{yCord}', function ($xCord, $yCord) {
+            $square = \App\Gameworld::where('xCord', '=', $xCord)
+                ->where('yCord', '=', $yCord)
+                ->first();
+            if($square->city_id)
+            {
+                Session::flash('error', "Square is not empty!");
+                return redirect(route('/map'));
+            }
+            return view('emptySquare', ['square' => $square]);
+        });
     });
 });
 Auth::routes();
