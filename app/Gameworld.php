@@ -12,17 +12,6 @@ class Gameworld extends Model
     protected $table = 'gameworld';
     protected $fillable = ['composite_key_fail', 'xCord', 'yCord', 'city_id'];
 
-    public static function start($gameWorldConfig)
-    {
-        for ($i = $gameWorldConfig['worldsize']['xStarts']; $i <= $gameWorldConfig['worldsize']['xEnds']; $i++) {
-            for ($s = $gameWorldConfig['worldsize']['yStarts']; $s <= $gameWorldConfig['worldsize']['yEnds']; $s++) {
-                \Illuminate\Support\Facades\DB::table('gameworld')->insert([
-                    'xCord' => $s,
-                    'yCord' => $i,
-                ]);
-            }
-        }
-    }
 
     public static function addCity($xCord, $yCord, $cityInfo = [], $tribe)
     {
@@ -66,12 +55,5 @@ class Gameworld extends Model
                 ->update(['city_id' => null]);
              City::destroy($city->id);
         }
-    }
-    public static function deleteCity($city_id)
-    {
-        // Additional delete information here xD
-        City::where('id','=', $city_id)
-            ->delete();
-        return true;
     }
 }
