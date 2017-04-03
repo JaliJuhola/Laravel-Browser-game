@@ -108,6 +108,15 @@
                                         {{csrf_field()}}
                                         <input type="submit" name="Delete" value="Delete your account!" class="btn btn-default">
                                     </form>
+                                    @if (count($errors) > 0)
+                                      <div class="alert alert-danger">
+                                       <ul>
+                                      @foreach ($errors->all() as $error)
+                                     <li>{{ $error }}</li>
+                                    @endforeach
+                                     </ul>
+                                     </div>
+                               @endif
                                 </div>
                             </div>
                         </div>

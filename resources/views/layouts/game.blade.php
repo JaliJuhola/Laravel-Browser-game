@@ -61,7 +61,7 @@
                 @endif
                 @if (Session::has('error'))
                     <div style="color: white; width: 400px; margin-left: auto;
-                 text-align: center;margin-right: auto;" class="label-warning">{{ Session::get('error') }}</div>
+                 text-align: center;margin-right: auto;" class="alert alert-danger">{{ Session::get('error') }}</div>
                 @endif
                 @yield('mainarea')
             </div>

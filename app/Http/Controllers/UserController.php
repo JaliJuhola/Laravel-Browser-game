@@ -22,7 +22,7 @@ class UserController extends Controller
     public function update(Request $request)
     {
         $this->validate($request, [
-            'user_description' => 'required'
+            'user_description' => 'required|max:255',
         ]);
         User::where('id', Auth::user()->id)
             ->update(['description' => $request->user_description]);

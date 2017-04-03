@@ -50,10 +50,12 @@ class ArmyController extends Controller implements ShouldQueue
     function addTroops($id, Request $request)
     {
         $infantry = BasicTribe::$infantry;
+        $trainingSuccess = 0;
         foreach ($infantry as $item) {
             $value = $item::$troopName . "Amount";
             $amount = $request->$value;
             if ($amount > 0) {
+                $trainingSuccess = 1;
                 $ready = Carbon::now()->addSecond($item::$trainingSpeed * $amount)->timestamp;
                 $troopque = new TroopQueue();
                 $troopque->troopsready = $ready;
@@ -61,14 +63,19 @@ class ArmyController extends Controller implements ShouldQueue
                 $troopque->troopname = $item::$troopName;
                 $troopque->army_id = $id;
                 $troopque->save();
-                $troopUnit = TroopUnit::where('army_id', '=', $troopque->army_id)
+              /*  $troopUnit = TroopUnit::where('army_id', '=', $troopque->army_id)
                     ->where('troopname', '=', $troopque->troopname)->first();
-                $army = Army::where('id', '=', $troopque->army_id)->first();
+                $army = Army::where('id', '=', $troopque->army_id)->first();*/
             //    $job = (new Troopsready($troopUnit, $troopque))
              //       ->delay(Carbon::now()->addSecond($item::$trainingSpeed * $amount));
               //  dispatch($job);
             }
 
+        }
+        if($trainingSuccess  === 0)
+        {
+            Session::flash('error', "No troops added to queue. Please add numeric value to barracks.");
+            return back();
         }
         Session::flash('message', "Troops succesfully added to queue");
         self::troopsReady();
