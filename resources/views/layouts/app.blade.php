@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html style="height: 100% !important;" lang="{{ config('app.locale') }}">
 <head>
-    <script src="/ht/public/js/clock.js">
+    <script src="../js/clock.js">
     </script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">

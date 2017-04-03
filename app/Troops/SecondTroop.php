@@ -13,7 +13,7 @@ class SecondTroop
 {
     public static $attackPower = 50;
     public static $speed = 20;
-    public static $defencePower = 500;
+    public static $defencePower = 50;
     public static $troopName = "SecondTroop";
     public static $trainingSpeed = 10;
 

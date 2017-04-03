@@ -62,8 +62,9 @@ class Gameworld extends Model
     {
         $cities = City::getPlayersCities($user_id);
         foreach ($cities as $city) {
-            self::where('city_id', '=', $city->city_id)
+            self::where('city_id', '=', $city->id)
                 ->update(['city_id' => null]);
+             City::destroy($city->id);
         }
     }
     public static function deleteCity($city_id)

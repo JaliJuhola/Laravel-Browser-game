@@ -68,10 +68,9 @@ class ArmyController extends Controller implements ShouldQueue
              //       ->delay(Carbon::now()->addSecond($item::$trainingSpeed * $amount));
               //  dispatch($job);
             }
-            Session::flash('message', "Troops succesfully added to queue");
-            return back();
 
         }
+        Session::flash('message', "Troops succesfully added to queue");
         self::troopsReady();
         return back();
     }

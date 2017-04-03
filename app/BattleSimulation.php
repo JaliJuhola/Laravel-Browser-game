@@ -20,25 +20,23 @@ class BattleSimulation
         $defensePower = 0;
         foreach ($attacker as $attackerUnit) {
             $className = call_user_func(array('App\\Troops\\'.$attackerUnit->troopname, 'attackPower'));
-            $attackPower = $className + $attackPower;
+            $attackPower = $className * $attackerUnit->amount + $attackPower;
         }
         foreach ($defender as $defenderUnit) {
             $className = call_user_func(array('App\\Troops\\'. $defenderUnit->troopname, 'defencePower'));
-            $defensePower = $className + $defensePower;
+            $defensePower = $className * $defenderUnit->amount + $defensePower;
         }
-        $attackPower = $attackPower - $defensePower;
-        $defensePower = $defensePower - $attackPower;
         if ($attackPower >= $defensePower) {
             foreach ($attacker as $atUnit) {
                 $power = call_user_func(array('App\\Troops\\'. $atUnit->troopname, 'attackPower'));
                 if ($defensePower >= $atUnit->amount * $power) {
-                    $defensePower = $defensePower - ($atUnit->amount * ($atUnit->troopname)::attackPower);
+                    $defensePower = $defensePower - ($atUnit->amount * $power);
                     $atUnit->amount = 0;
                 } else {
                     $power = call_user_func(array('App\\Troops\\'. $atUnit->troopname, 'attackPower'));
                     $removed = 0;
                     if($defensePower >= $power) {
-                        $removed = $defensePower / $power;
+                        $removed = round($defensePower / $power);
                     }
                     $atUnit->amount = $atUnit->amount - $removed;
                     $defensePower = 0;
@@ -55,7 +53,7 @@ class BattleSimulation
                     $defUnit->amount = 0;
                 } else {
                     if($attackPower > 1) {
-                        $removed = $attackPower / $defTroopPower;
+                        $removed = round($attackPower / $defTroopPower);
                         $defUnit->amount = $defUnit->amount - $removed;
                         $attackPower = 0;
                     }

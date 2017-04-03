@@ -41,6 +41,7 @@ class CityController extends Controller
 
     public function index($id = -1, Request $request)
     {
+         ArmyController::troopsReady();
         if ($id === -1) {
             return $this->undefinendCityId($request);
         }
