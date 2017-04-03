@@ -53,7 +53,7 @@
                         @yield('site_head')
                     </h1>
                 </div>
-
+                @yield('mainarea')
                 @if (Session::has('message'))
                     <div style="color: white; width: 400px;
                  text-align: center;margin-left: auto; margin-right: auto;"
@@ -63,7 +63,6 @@
                     <div style="color: white; width: 400px; margin-left: auto;
                  text-align: center;margin-right: auto;" class="alert alert-danger">{{ Session::get('error') }}</div>
                 @endif
-                @yield('mainarea')
             </div>
         </div>
     </div>
