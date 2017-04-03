@@ -32,7 +32,7 @@ class User extends Authenticatable
     {
        Gameworld::clearUsersCities($id); // clears references to users cities from map
         // Here should be added more values to delete when deleting whole user
-        return self::where('id', $id)->delete();
+        self::destroy($id);
     }
 
     public function player()

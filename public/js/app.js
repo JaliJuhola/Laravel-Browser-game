@@ -12572,7 +12572,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         citySquare: function citySquare(id) {
-            window.location.href = "/ht.jalijuhola.xyz/city/" + id;
+            window.location.href = "/city/" + id;
         },
         emptySquare: function emptySquare(xCord, yCord) {
             this.activeX = xCord;
@@ -12625,7 +12625,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         settle: function settle() {
             axios.post('addCity', { xCord: this.activeX, yCord: this.activeY }).then(function (response) {
-                window.location.href = "/ht.jalijuhola.xyz/city/view";
+                window.location.href = "/city/view";
             });
         }
     }

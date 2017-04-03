@@ -31,7 +31,7 @@ class CityController extends Controller
             $user = $this->getCityViewItems($city, $request);
             return json_encode($user);
         }
-        return ['taalla virhe'];
+        return ['Error here!'];
     }
 
     public function usersCitiesJson()
@@ -100,7 +100,6 @@ class CityController extends Controller
 
     public function addCity(Request $request, $xCord = -1000, $yCord = -1000)
     {
-
         if (isset($request->xCord) && isset($request->yCord)) {
             $xCord = $request->xCord;
             $yCord = $request->yCord;

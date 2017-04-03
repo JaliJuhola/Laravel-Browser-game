@@ -102,7 +102,11 @@
 
                                     <form id="update_user" action="{{route('profile/update')}}" method="post">
                                         {{csrf_field()}}
-                                        <input type="submit" name="Update" class="btn btn-primary">
+                                        <input type="submit" name="Update" value="Update profile" class="btn btn-primary">
+                                    </form>
+                                    <form id="deleteUser" action="{{route("user/delete")}}" method="post">
+                                        {{csrf_field()}}
+                                        <input type="submit" name="Delete" value="Delete your account!" class="btn btn-default">
                                     </form>
                                 </div>
                             </div>

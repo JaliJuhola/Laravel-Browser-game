@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Player;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
@@ -28,9 +29,9 @@ class UserController extends Controller
         return back()->with('status', 'description has been updated');
     }
 
-    public function delete(Request $request)
+    public function deleteUser(Request $request)
     {
-        User::where('id', User::safelyDelete(Auth::user()->id));
+        User::safelyDelete(Auth::user()->id);
         return view('welcome', ['status' => 'your account has been deleted']);
     }
 }
